@@ -1,0 +1,13 @@
+# CoolPluginToAmazeYourFriendInMinecraft Configuration
+settings:
+  max-distance: 150
+  spread-distance: 10
+  circle-radius: 1.5
+  rotation-speed: 2.0
+  sword-size: 0.8
+  return-speed: 1.5
+  
+messages:
+  sword-activated: "&6Floating swords activated!"
+  no-swords: "&cYou need swords to use this power!"
+  no-op: "&cYou must be an operator!"

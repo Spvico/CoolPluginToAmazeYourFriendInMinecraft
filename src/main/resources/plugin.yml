@@ -1,0 +1,10 @@
+name: CoolPluginToAmazeYourFriendInMinecraft
+version: 1.0
+main: com.spvico.coolplugin.Main
+api-version: "1.20"
+description: Amazing floating swords that attack when you look at blocks!
+author: Spvico
+commands:
+  reloadswords:
+    description: Reload the plugin configuration
+    usage: /<command>
