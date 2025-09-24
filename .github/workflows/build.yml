@@ -13,27 +13,30 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
-    - name: Build with Maven
+    - name: Create JAR manually
       run: |
-        # Create proper Maven directory structure
-        mkdir -p src/main/java/com/spvico/coolplugin
-        mkdir -p src/main/resources
+        # Create a simple JAR without Maven
+        mkdir -p build/classes
+        mkdir -p build/resources
         
-        # Move Java files to correct package location
-        find . -name "*.java" -exec mv {} src/main/java/com/spvico/coolplugin/ \; 2>/dev/null || true
+        # Compile Java files
+        javac -d build/classes src/main/java/com/spvico/coolplugin/Main.java
         
-        # Move YAML files to resources
-        find . -name "*.yml" -exec mv {} src/main/resources/ \; 2>/dev/null || true
+        # Copy resources
+        cp src/main/resources/* build/resources/ 2>/dev/null || true
         
-        # Download Spigot API
-        wget -O lib/spigot-api.jar https://hub.spigotmc.org/nexus/content/repositories/snapshots/org/spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/spigot-api-1.20.1-R0.1-SNAPSHOT.jar
+        # Create JAR
+        jar cf CoolPlugin.jar -C build/classes . -C build/resources .
         
-        # Compile and package
-        mvn clean compile
-        mvn package
+        # Create proper structure for plugin.yml
+        mkdir -p META-INF
+        echo "Manifest-Version: 1.0" > META-INF/MANIFEST.MF
+        echo "Main-Class: com.spvico.coolplugin.Main" >> META-INF/MANIFEST.MF
+        
+        jar ufm CoolPlugin.jar META-INF/MANIFEST.MF
         
     - name: Upload JAR
       uses: actions/upload-artifact@v4
       with:
         name: CoolPlugin
-        path: target/*.jar
+        path: CoolPlugin.jar
